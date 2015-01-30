@@ -19,6 +19,7 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.LaxRedirectStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -106,7 +107,7 @@ public class WebPost extends AbstractWebRequest {
 
 			httpPost.addHeader("Accept-Encoding", "*");
 			
-			HttpClientBuilder builder = HttpClientBuilder.create();
+			HttpClientBuilder builder = HttpClientBuilder.create().setRedirectStrategy(new LaxRedirectStrategy());
 			try (CloseableHttpClient httpclient = builder.build(); CloseableHttpResponse response = httpclient.execute(httpPost)) {
 				int statusCode = response.getStatusLine().getStatusCode();
 				if (isSuccess(statusCode)) {
