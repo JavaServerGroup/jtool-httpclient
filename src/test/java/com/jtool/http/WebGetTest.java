@@ -3,6 +3,7 @@ package com.jtool.http;
 import static com.jtool.http.RemoteTestUtils.port;
 import static com.jtool.http.RemoteTestUtils.root;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -33,6 +34,17 @@ public class WebGetTest extends AbstractRequestTest {
 		String result = WebGet.sent(url, user);
 		
 		Assert.assertEquals(this.getWithParamResponse, result);
+	}
+	
+	@Test
+	public void testSentByMapAndRecirected() {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("redirectParamName", "redirectParamValue");
+		
+		String url = root(port()) + "/redirectGet";
+		String result = WebGet.sent(url, params);
+		
+		Assert.assertEquals("redirectedGetSuccess", result);
 	}
 	
 	@Test(expected=StatusCodeNot200Exception.class)
