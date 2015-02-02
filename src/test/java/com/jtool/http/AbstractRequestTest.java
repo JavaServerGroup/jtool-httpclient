@@ -8,6 +8,7 @@ import static com.github.dreamhead.moco.Moco.httpserver;
 import static com.github.dreamhead.moco.Moco.query;
 import static com.github.dreamhead.moco.Moco.uri;
 import static com.jtool.http.RemoteTestUtils.port;
+import static com.jtool.http.RemoteTestUtils.root;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,6 +47,12 @@ public abstract class AbstractRequestTest {
         		eq(form("pass"), "zlITAChpmvb25d5GpQuQpA=="), eq(form("mver"), "WAP2.5"), eq(form("ip"), "218.17.157.95"), 
         		eq(form("type"), "2"), eq(form("c_status"), "1"), eq(form("osver"), "WAP"), eq(form("account"), "a2777754"), 
         		eq(form("cid"), "afmobi"), eq(form("token"), "3rnM19Rgv4bF7nmtsl6DYPrc9dy1VrW5kdtp"))).response(postResponse);
+        
+        server.get(and(by(uri("/redirectGet")), eq(query("redirectParamName"), "redirectParamValue"))).redirectTo(root(port()) + "/redirectedGet?redirectParamName=redirectParamValue");
+        server.get(and(by(uri("/redirectedGet")), eq(query("redirectParamName"), "redirectParamValue"))).response("redirectedGetSuccess");
+        
+        server.post(and(by(uri("/redirectPost")), eq(form("redirectParamName"), "redirectParamValue"))).redirectTo(root(port()) + "/redirectedPost");
+        server.post(and(by(uri("/redirectedPost")), eq(form("redirectParamName"), "redirectParamValue"))).response("redirectedPostSuccess");
         
         runner = Runner.runner(server);
         runner.start();

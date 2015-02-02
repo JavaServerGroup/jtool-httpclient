@@ -44,17 +44,18 @@ public class WebGet extends AbstractWebRequest {
 	}
 	
 	public static String sent(String url) {
-		HttpClientBuilder builder = HttpClientBuilder.create();
 		HttpGet httpGet = new HttpGet(url);
-		
 		httpGet.addHeader("Accept-Encoding", "*");
 		
+		HttpClientBuilder builder = HttpClientBuilder.create();
 		try (CloseableHttpClient httpclient = builder.build();CloseableHttpResponse response = httpclient.execute(httpGet)) {
 			int statusCode = response.getStatusLine().getStatusCode();
 			if (isSuccess(statusCode)) {
 				String result = getResponseString(response);
 				logger.debug("返回结果：" + result);
 				return result;
+			} else if(300 < statusCode && statusCode < 310) {
+				return WebGet.sent(response.getLastHeader("Location").getValue());
 			} else {
 				logger.debug("StatusCodeNot200Exception: " + statusCode + " url:" + url);
 				throw new StatusCodeNot200Exception(url, statusCode);
