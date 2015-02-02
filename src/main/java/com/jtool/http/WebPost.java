@@ -118,6 +118,8 @@ public class WebPost extends AbstractWebRequest {
 					default:
 						throw new RuntimeException();
 					}
+				} else if(300 < statusCode && statusCode < 310) {
+					return WebPost.sent(response.getLastHeader("Location").getValue(), params);
 				} else {
 					logger.debug("StatusCodeNot200Exception: " + statusCode + " url:" + url);
 					throw new StatusCodeNot200Exception(url, statusCode);
