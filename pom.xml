@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>jtool-httpclient</groupId>
+	<groupId>com.jtool</groupId>
 	<artifactId>jtool-httpclient</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -97,6 +97,12 @@
 			<artifactId>moco-core</artifactId>
 			<version>0.10.0</version>
 		</dependency>
-
 	</dependencies>
+	<distributionManagement>
+		<repository>
+			<id>jtool-maven-repository</id>
+			<name>Internal Repository</name>
+			<url>file://${project.basedir}/../jtool-mvn-repository/releases</url>
+		</repository>
+	</distributionManagement>
 </project>
