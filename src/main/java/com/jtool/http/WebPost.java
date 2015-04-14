@@ -38,6 +38,10 @@ public class WebPost extends AbstractWebRequest {
 		logger.debug("返回结果：" + result);
 		return result;
 	}
+	public static byte[] sentBytes(String url, Map<String, ?> params) {
+		byte[] result = (byte[])doSent(url, params, ReturnType.bytes);
+		return result;
+	}
 
 	private static HttpEntity converParamsToEntity(Map<String, ?> params) {
 
