@@ -1,5 +1,7 @@
 package com.jtool.http.exception;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,9 +13,17 @@ public class StatusCodeNot200Exception extends RuntimeException {
 	
 	private String url;
 	private int statusCode;
+	private Map<String, ?> params;
 	
 	public StatusCodeNot200Exception(String url, int statusCode) {
 		this.url = url;
+		this.statusCode = statusCode;
+		logger.debug(statusCode + "");
+	}
+	
+	public StatusCodeNot200Exception(String url, Map<String, ?> params, int statusCode) {
+		this.url = url;
+		this.params = params;
 		this.statusCode = statusCode;
 		logger.debug(statusCode + "");
 	}
@@ -26,4 +36,14 @@ public class StatusCodeNot200Exception extends RuntimeException {
 		return statusCode;
 	}
 
+	public Map<String, ?> getParams() {
+		return params;
+	}
+
+	@Override
+	public String toString() {
+		return "StatusCodeNot200Exception [logger=" + logger + ", url=" + url
+				+ ", statusCode=" + statusCode + ", params=" + params + "]";
+	}
+	
 }
