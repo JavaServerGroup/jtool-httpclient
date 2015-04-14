@@ -126,7 +126,7 @@ public class WebPost extends AbstractWebRequest {
 					return WebPost.sent(response.getLastHeader("Location").getValue(), params);
 				} else {
 					logger.debug("StatusCodeNot200Exception: " + statusCode + " url:" + url);
-					throw new StatusCodeNot200Exception(url, statusCode);
+					throw new StatusCodeNot200Exception(url, params, statusCode);
 				}
 			}
 
