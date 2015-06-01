@@ -66,4 +66,14 @@ public class WebGetTest extends AbstractRequestTest {
 		Assert.assertEquals(result, this.getResponse);
 	}
 	
+	@Test
+	public void testSentByBeanAndReturnBytes() {
+		User user = makeUserBean();
+		
+		String url = root(port()) + getUri;
+		byte[] result = WebGet.sentAndReturnBytes(url, user);
+		
+		Assert.assertArrayEquals(this.getResponse.getBytes(), result);
+	}
+	
 }

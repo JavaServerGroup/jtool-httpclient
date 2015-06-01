@@ -36,6 +36,14 @@ public class WebGet extends AbstractWebRequest {
 		return sent(url);
 		
 	}
+	
+	public static byte[] sentAndReturnBytes(String url, Object bean) {
+		return sentAndReturnBytes(url, converBeanToRequestMap(bean));
+	}
+	
+	public static byte[] sentAndReturnBytes(String url, Map<String, String> params) {
+		return (byte[])doSent(url, params, ReturnType.bytes);
+	}
 
 	private static String assembleParamsToUrl(String url, Map<String, String> params) {
 		List<NameValuePair> nameValuePairList = converParamsToNameValuePairs(params);
@@ -64,6 +72,45 @@ public class WebGet extends AbstractWebRequest {
 			throw new HttpRequestException(url, e);
 		}
 	}
+	
+	private static Object doSent(String url, Map<String, String> params, String returnType) {
+		logger.debug("发送url:" + url);
+		logger.debug("发送params:" + params.toString());
+		
+		if (params != null) {
+			url = assembleParamsToUrl(url, params);
+		}
 
+		try {
+			HttpGet httpGet = new HttpGet(url);
+			httpGet.addHeader("Accept-Encoding", "*");
+			
+			HttpClientBuilder builder = HttpClientBuilder.create();
+			try (CloseableHttpClient httpclient = builder.build(); CloseableHttpResponse response = httpclient.execute(httpGet)) {
+				int statusCode = response.getStatusLine().getStatusCode();
+				if (isSuccess(statusCode)) {
+					switch (returnType) {
+					case ReturnType.bytes:
+						return getResponseBytes(response);
+					case ReturnType.string:
+						return getResponseString(response);
+					default:
+						throw new RuntimeException();
+					}
+				} else {
+					logger.debug("StatusCodeNot200Exception: " + statusCode + " url:" + url);
+					throw new StatusCodeNot200Exception(url, statusCode);
+				}
+			}
+
+		} catch (IOException e) {
+			throw new HttpRequestException(url, e);
+		}
+	}
+
+	private static class ReturnType{
+		private static final String string = "string";
+		private static final String bytes = "bytes";
+	}
 
 }
