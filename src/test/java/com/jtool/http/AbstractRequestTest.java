@@ -21,8 +21,8 @@ import com.github.dreamhead.moco.Runner;
 
 public abstract class AbstractRequestTest {
 
-	private static final String paramValue = "blah";
-	private static final String paramName = "username";
+	protected static final String paramValue = "blah";
+	protected static final String paramName = "username";
 
 	private Runner runner;
 
