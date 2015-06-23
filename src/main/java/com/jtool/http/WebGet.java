@@ -28,7 +28,7 @@ public class WebGet extends AbstractWebRequest {
 	public static String sent(String url, Map<String, String> params) {
 		
 		logger.debug("发送url:" + url);
-		logger.debug("发送params:" + params.toString());
+		logger.debug("发送params:" + params);
 		
 		if (params != null) {
 			url = assembleParamsToUrl(url, params);
@@ -75,7 +75,7 @@ public class WebGet extends AbstractWebRequest {
 	
 	private static Object doSent(String url, Map<String, String> params, String returnType) {
 		logger.debug("发送url:" + url);
-		logger.debug("发送params:" + params.toString());
+		logger.debug("发送params:" + params);
 		
 		if (params != null) {
 			url = assembleParamsToUrl(url, params);

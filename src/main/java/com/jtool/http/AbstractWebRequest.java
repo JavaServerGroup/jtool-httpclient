@@ -40,8 +40,7 @@ public abstract class AbstractWebRequest {
 
 	protected static String getResponseString(CloseableHttpResponse response) throws IOException {
 		HttpEntity entity = response.getEntity();
-		String result = EntityUtils.toString(entity, Consts.UTF_8);
-		return result;
+		return EntityUtils.toString(entity, Consts.UTF_8);
 	}
 
 	protected static boolean isSuccess(int statusCode) {

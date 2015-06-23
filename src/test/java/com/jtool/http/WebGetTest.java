@@ -38,7 +38,7 @@ public class WebGetTest extends AbstractRequestTest {
 	
 	@Test
 	public void testSentByMapAndRecirected() {
-		Map<String, String> params = new HashMap<String, String>();
+		Map<String, String> params = new HashMap<>();
 		params.put("redirectParamName", "redirectParamValue");
 		
 		String url = root(port()) + "/redirectGet";

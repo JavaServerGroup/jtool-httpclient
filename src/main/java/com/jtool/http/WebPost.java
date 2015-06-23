@@ -39,8 +39,7 @@ public class WebPost extends AbstractWebRequest {
 		return result;
 	}
 	public static byte[] sentBytes(String url, Map<String, ?> params) {
-		byte[] result = (byte[])doSent(url, params, ReturnType.bytes);
-		return result;
+		return (byte[])doSent(url, params, ReturnType.bytes);
 	}
 
 	private static HttpEntity converParamsToEntity(Map<String, ?> params) {
